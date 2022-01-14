@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module expectation_module</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>expectation_module</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/mnt/netapp2/Home_FT2/home/cesga/tec_app1/JuanSantosSuarez/ProgramasDefinitivos/expectation_module.py">/mnt/netapp2/Home_FT2/home/cesga/tec_app1/JuanSantosSuarez/ProgramasDefinitivos/expectation_module.py</a></font></td></tr></table>
+    <p><tt>Author:&nbsp;Juan&nbsp;Santos&nbsp;Suárez<br>
+Version:&nbsp;Initial&nbsp;version<br>
+&nbsp;<br>
+MyQLM&nbsp;version:&nbsp;myqlm/1.2.2-python-3.6.12<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;objective&nbsp;of&nbsp;this&nbsp;module&nbsp;is&nbsp;to&nbsp;initialize&nbsp;a&nbsp;quantum&nbsp;state&nbsp;codifying&nbsp;a&nbsp;probability&nbsp;distribution.<br>
+The&nbsp;best&nbsp;way&nbsp;to&nbsp;do&nbsp;this&nbsp;is&nbsp;to&nbsp;codify&nbsp;directly&nbsp;the&nbsp;square&nbsp;root&nbsp;of&nbsp;the&nbsp;probabilities&nbsp;in&nbsp;the&nbsp;quantum&nbsp;amplitudes,<br>
+as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;histogram.<br>
+Then,&nbsp;the&nbsp;function&nbsp;load_function&nbsp;will&nbsp;allow&nbsp;us&nbsp;to&nbsp;load&nbsp;a&nbsp;function&nbsp;on&nbsp;those&nbsp;probabilities&nbsp;using&nbsp;an&nbsp;auxiliary&nbsp;qubit;<br>
+the&nbsp;function&nbsp;will&nbsp;be&nbsp;codified&nbsp;on&nbsp;those&nbsp;qubits&nbsp;in&nbsp;which&nbsp;that&nbsp;qubit's&nbsp;value&nbsp;is&nbsp;1<br>
+After&nbsp;that,&nbsp;we&nbsp;can&nbsp;create&nbsp;the&nbsp;Grover&nbsp;operator&nbsp;Q</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-get_histogram"><strong>get_histogram</strong></a>(p, a, b, nbin)</dt><dd><tt>Given&nbsp;a&nbsp;function&nbsp;p,&nbsp;convert&nbsp;it&nbsp;into&nbsp;a&nbsp;histogram.&nbsp;The&nbsp;function&nbsp;must&nbsp;be&nbsp;positive,&nbsp;the&nbsp;normalization&nbsp;is&nbsp;automatic.<br>
+Note&nbsp;that&nbsp;instead&nbsp;of&nbsp;having&nbsp;an&nbsp;analytical&nbsp;expression,&nbsp;p&nbsp;could&nbsp;just&nbsp;create&nbsp;an&nbsp;arbitrary&nbsp;vector&nbsp;of&nbsp;the&nbsp;right&nbsp;dimensions&nbsp;and&nbsp;positive&nbsp;amplitudes<br>
+so&nbsp;that&nbsp;this&nbsp;procedure&nbsp;could&nbsp;be&nbsp;used&nbsp;to&nbsp;initialize&nbsp;any&nbsp;quantum&nbsp;state&nbsp;with&nbsp;real&nbsp;amplitudes<br>
+&nbsp;<br>
+a&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lower&nbsp;limit&nbsp;of&nbsp;the&nbsp;interval<br>
+b&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;upper&nbsp;limit&nbsp;of&nbsp;the&nbsp;interval<br>
+p&nbsp;&nbsp;&nbsp;&nbsp;(function)&nbsp;=&nbsp;function&nbsp;that&nbsp;we&nbsp;want&nbsp;to&nbsp;convert&nbsp;to&nbsp;a&nbsp;probability&nbsp;mass&nbsp;function.&nbsp;It&nbsp;does&nbsp;not&nbsp;have&nbsp;to&nbsp;be&nbsp;normalized&nbsp;but&nbsp;must&nbsp;be&nbsp;positive&nbsp;in&nbsp;the&nbsp;interval<br>
+nbin&nbsp;(int)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;number&nbsp;of&nbsp;bins&nbsp;in&nbsp;the&nbsp;interval</tt></dd></dl>
+ <dl><dt><a name="-load_Q"><strong>load_Q</strong></a>(nqbits, P_gate, R_gate)</dt><dd><tt>Creates&nbsp;the&nbsp;Grover&nbsp;operator&nbsp;Q&nbsp;except&nbsp;a&nbsp;global&nbsp;phase,&nbsp;so&nbsp;it&nbsp;really&nbsp;creates&nbsp;the&nbsp;gate&nbsp;-Q<br>
+&nbsp;<br>
+ARGUMENTS:<br>
+nqbits&nbsp;&nbsp;(int)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;number&nbsp;of&nbsp;qubits<br>
+U0_gate&nbsp;(ParamGate)&nbsp;:&nbsp;Gate&nbsp;U_psi_0<br>
+U1_gate&nbsp;(ParamGate)&nbsp;:&nbsp;Gate&nbsp;U_psi<br>
+&nbsp;<br>
+RETURNS:<br>
+Q_gate&nbsp;(ParamGate)&nbsp;&nbsp;:&nbsp;Gate&nbsp;-Q=U1U0</tt></dd></dl>
+ <dl><dt><a name="-load_U0"><strong>load_U0</strong></a>(nqbits)</dt><dd><tt>Creates&nbsp;the&nbsp;gate&nbsp;U0,&nbsp;whose&nbsp;action&nbsp;is&nbsp;to&nbsp;flip&nbsp;the&nbsp;sign&nbsp;of&nbsp;the&nbsp;marked&nbsp;states.<br>
+Marked&nbsp;states&nbsp;are&nbsp;those&nbsp;in&nbsp;which&nbsp;the&nbsp;auxiliary&nbsp;qubit&nbsp;has&nbsp;value&nbsp;1,&nbsp;so&nbsp;this&nbsp;is&nbsp;achieved&nbsp;with&nbsp;a&nbsp;Z&nbsp;gate<br>
+acting&nbsp;on&nbsp;that&nbsp;qubit.&nbsp;This&nbsp;function&nbsp;is&nbsp;more&nbsp;or&nbsp;less&nbsp;unnecessary.<br>
+&nbsp;<br>
+ARGUMENTS:<br>
+nqbits&nbsp;(int)&nbsp;:&nbsp;number&nbsp;of&nbsp;qubits&nbsp;without&nbsp;including&nbsp;the&nbsp;auxiliary&nbsp;one<br>
+&nbsp;<br>
+RETURNS:<br>
+U0_gate&nbsp;(ParamGate)</tt></dd></dl>
+ <dl><dt><a name="-load_U1"><strong>load_U1</strong></a>(nqbits, P_gate, R_gate)</dt><dd><tt>Function&nbsp;that&nbsp;creates&nbsp;the&nbsp;gate&nbsp;which&nbsp;performs&nbsp;the&nbsp;operation&nbsp;of&nbsp;flipping&nbsp;the&nbsp;sign&nbsp;of&nbsp;the&nbsp;component&nbsp;along&nbsp;psi<br>
+&nbsp;<br>
+ARGUMENTS:<br>
+nqbits&nbsp;(int)&nbsp;:&nbsp;number&nbsp;of&nbsp;qubits<br>
+R_gate&nbsp;(ParamGate)&nbsp;:&nbsp;Gate&nbsp;that&nbsp;implements&nbsp;the&nbsp;operator&nbsp;R<br>
+P_gate&nbsp;(ParamGate)&nbsp;:&nbsp;Gate&nbsp;that&nbsp;implements&nbsp;the&nbsp;operator&nbsp;P<br>
+&nbsp;<br>
+RETURNS:<br>
+U1_gate&nbsp;(ParamGate)</tt></dd></dl>
+ <dl><dt><a name="-load_function"><strong>load_function</strong></a>(centers, f, nqbits)</dt><dd><tt>Load&nbsp;the&nbsp;values&nbsp;of&nbsp;the&nbsp;function&nbsp;f&nbsp;on&nbsp;the&nbsp;states&nbsp;in&nbsp;which&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;auxiliary&nbsp;qubit&nbsp;is&nbsp;1&nbsp;once&nbsp;the&nbsp;probabilities&nbsp;are&nbsp;already&nbsp;loaded.<br>
+&nbsp;<br>
+PARAMETERS:<br>
+centers&nbsp;(np.ndarray)&nbsp;:&nbsp;center&nbsp;of&nbsp;each&nbsp;considered&nbsp;bin<br>
+f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(function)&nbsp;&nbsp;&nbsp;:&nbsp;function&nbsp;that&nbsp;we&nbsp;want&nbsp;to&nbsp;load.&nbsp;Its&nbsp;image&nbsp;must&nbsp;be&nbsp;contained&nbsp;in&nbsp;[0,&nbsp;1]<br>
+nqbits&nbsp;&nbsp;(int)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;number&nbsp;of&nbsp;qubits&nbsp;used&nbsp;WITHOUT&nbsp;counting&nbsp;the&nbsp;auxiliary&nbsp;qubit<br>
+&nbsp;<br>
+RETURNS:<br>
+R_gate&nbsp;(ParamGate)&nbsp;:&nbsp;gate&nbsp;that&nbsp;loads&nbsp;the&nbsp;function&nbsp;into&nbsp;the&nbsp;amplitudes<br>
+y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(np.ndarray)&nbsp;&nbsp;:&nbsp;array&nbsp;containing&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;function&nbsp;in&nbsp;each&nbsp;bin</tt></dd></dl>
+ <dl><dt><a name="-load_probabilities"><strong>load_probabilities</strong></a>(nqbits, p, a, b)</dt><dd><tt>Function&nbsp;that&nbsp;creates&nbsp;a&nbsp;gate&nbsp;that&nbsp;loads&nbsp;a&nbsp;probability&nbsp;distribution&nbsp;given&nbsp;by&nbsp;a&nbsp;function&nbsp;into&nbsp;a&nbsp;quantum&nbsp;state<br>
+Note&nbsp;that&nbsp;instead&nbsp;of&nbsp;having&nbsp;an&nbsp;analytical&nbsp;expression,&nbsp;p&nbsp;could&nbsp;just&nbsp;create&nbsp;an&nbsp;arbitrary&nbsp;vector&nbsp;of&nbsp;the&nbsp;right&nbsp;dimensions&nbsp;and&nbsp;positive&nbsp;amplitudes<br>
+so&nbsp;that&nbsp;this&nbsp;procedure&nbsp;could&nbsp;be&nbsp;used&nbsp;to&nbsp;initialize&nbsp;any&nbsp;quantum&nbsp;state&nbsp;with&nbsp;real&nbsp;amplitudes<br>
+&nbsp;<br>
+&nbsp;<br>
+PARAMETERS:<br>
+nqbits&nbsp;(int)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;number&nbsp;of&nbsp;qubits&nbsp;used.&nbsp;It&nbsp;will&nbsp;set&nbsp;the&nbsp;number&nbsp;of&nbsp;bins&nbsp;to&nbsp;2**nqubits<br>
+p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(function)&nbsp;=&nbsp;function&nbsp;that&nbsp;we&nbsp;want&nbsp;to&nbsp;convert&nbsp;to&nbsp;a&nbsp;probability&nbsp;mass&nbsp;function.&nbsp;It&nbsp;does&nbsp;not&nbsp;have&nbsp;to&nbsp;be&nbsp;normalized&nbsp;but&nbsp;must&nbsp;be&nbsp;positive&nbsp;in&nbsp;the&nbsp;interval<br>
+a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lower&nbsp;limit&nbsp;of&nbsp;the&nbsp;interval<br>
+b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;upper&nbsp;limit&nbsp;of&nbsp;the&nbsp;interval<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+RETURNS:<br>
+centers&nbsp;(np.ndarray)&nbsp;=&nbsp;array&nbsp;containing&nbsp;the&nbsp;center&nbsp;of&nbsp;each&nbsp;bin<br>
+probs&nbsp;&nbsp;&nbsp;(np.ndarray)&nbsp;=&nbsp;array&nbsp;conntainig&nbsp;the&nbsp;probability&nbsp;of&nbsp;each&nbsp;bin<br>
+P_gate&nbsp;&nbsp;(ParamGate)&nbsp;&nbsp;=&nbsp;quantum&nbsp;gate&nbsp;that&nbsp;loads&nbsp;the&nbsp;probability&nbsp;distribution&nbsp;p&nbsp;in&nbsp;nqbits&nbsp;qubits</tt></dd></dl>
+ <dl><dt><a name="-load_probabilities_from_array"><strong>load_probabilities_from_array</strong></a>(nqbits, p)</dt><dd><tt>Function&nbsp;that&nbsp;loads&nbsp;an&nbsp;arbitrary&nbsp;real&nbsp;valued&nbsp;positive&nbsp;array&nbsp;p&nbsp;as&nbsp;probabilities&nbsp;on&nbsp;a&nbsp;quantum&nbsp;state<br>
+&nbsp;<br>
+&nbsp;<br>
+PARAMETERS:<br>
+nqbits&nbsp;(int)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;number&nbsp;of&nbsp;qubits&nbsp;used.&nbsp;It&nbsp;will&nbsp;set&nbsp;the&nbsp;number&nbsp;of&nbsp;bins&nbsp;to&nbsp;2**nqubits<br>
+p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(np.ndarray)&nbsp;=&nbsp;array&nbsp;containing&nbsp;the&nbsp;probability&nbsp;of&nbsp;each&nbsp;bin<br>
+&nbsp;<br>
+&nbsp;<br>
+RETURNS:<br>
+centers&nbsp;(np.ndarray)&nbsp;=&nbsp;array&nbsp;containing&nbsp;the&nbsp;center&nbsp;of&nbsp;each&nbsp;bin<br>
+probs&nbsp;&nbsp;&nbsp;(np.ndarray)&nbsp;=&nbsp;array&nbsp;conntainig&nbsp;the&nbsp;probability&nbsp;of&nbsp;each&nbsp;bin<br>
+P_gate&nbsp;&nbsp;(ParamGate)&nbsp;&nbsp;=&nbsp;quantum&nbsp;gate&nbsp;that&nbsp;loads&nbsp;the&nbsp;probability&nbsp;distribution&nbsp;p&nbsp;in&nbsp;nqbits&nbsp;qubits</tt></dd></dl>
+ <dl><dt><a name="-multiplexor_RY_m"><strong>multiplexor_RY_m</strong></a>(qprog, qbits, thetas, m, j)</dt><dd><tt>Create&nbsp;a&nbsp;multiplexor&nbsp;that&nbsp;applies&nbsp;an&nbsp;RY&nbsp;gate&nbsp;on&nbsp;a&nbsp;qubit&nbsp;controlled&nbsp;by&nbsp;the&nbsp;former&nbsp;m&nbsp;qubits<br>
+It&nbsp;will&nbsp;have&nbsp;its&nbsp;lateral&nbsp;cnot&nbsp;on&nbsp;the&nbsp;right.<br>
+&nbsp;<br>
+qprog&nbsp;=&nbsp;Quantum&nbsp;Program&nbsp;in&nbsp;which&nbsp;we&nbsp;want&nbsp;to&nbsp;apply&nbsp;the&nbsp;gates<br>
+qbits&nbsp;=&nbsp;Nmber&nbsp;of&nbsp;qubits&nbsp;of&nbsp;the&nbsp;quantum&nbsp;program<br>
+thetas&nbsp;(np.ndarray)&nbsp;=&nbsp;numpy&nbsp;array&nbsp;containing&nbsp;the&nbsp;set&nbsp;of&nbsp;angles&nbsp;that&nbsp;we&nbsp;want&nbsp;to&nbsp;apply<br>
+m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(int)&nbsp;=&nbsp;number&nbsp;of&nbsp;remaining&nbsp;controls<br>
+j&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(int)&nbsp;=&nbsp;index&nbsp;of&nbsp;the&nbsp;target&nbsp;qubits</tt></dd></dl>
+ <dl><dt><a name="-multiplexor_RY_m_recurs"><strong>multiplexor_RY_m_recurs</strong></a>(qprog, qbits, thetas, m, j, sig=1.0)</dt><dd><tt>Auxiliary&nbsp;function&nbsp;to&nbsp;create&nbsp;the&nbsp;recursive&nbsp;part&nbsp;of&nbsp;a&nbsp;multiplexor&nbsp;that&nbsp;applies&nbsp;an&nbsp;RY&nbsp;gate<br>
+&nbsp;<br>
+qprog&nbsp;=&nbsp;Quantum&nbsp;Program&nbsp;in&nbsp;which&nbsp;we&nbsp;want&nbsp;to&nbsp;apply&nbsp;the&nbsp;gates<br>
+qbits&nbsp;=&nbsp;Nmber&nbsp;of&nbsp;qubits&nbsp;of&nbsp;the&nbsp;quantum&nbsp;program<br>
+thetas&nbsp;(np.ndarray)&nbsp;=&nbsp;numpy&nbsp;array&nbsp;containing&nbsp;the&nbsp;set&nbsp;of&nbsp;angles&nbsp;that&nbsp;we&nbsp;want&nbsp;to&nbsp;apply<br>
+m&nbsp;&nbsp;&nbsp;(int)&nbsp;=&nbsp;number&nbsp;of&nbsp;remaining&nbsp;controls<br>
+j&nbsp;&nbsp;&nbsp;(int)&nbsp;=&nbsp;index&nbsp;of&nbsp;the&nbsp;target&nbsp;qubits<br>
+sig&nbsp;(float)&nbsp;=&nbsp;accounts&nbsp;for&nbsp;wether&nbsp;our&nbsp;multiplexor&nbsp;is&nbsp;being&nbsp;decomposed&nbsp;with&nbsp;its&nbsp;lateral&nbsp;CNOT&nbsp;at&nbsp;the&nbsp;right&nbsp;or&nbsp;at&nbsp;the&nbsp;left,&nbsp;even&nbsp;if&nbsp;that&nbsp;CNOT&nbsp;is&nbsp;not&nbsp;present&nbsp;because&nbsp;it&nbsp;cancelled&nbsp;out&nbsp;(its&nbsp;values&nbsp;can&nbsp;only&nbsp;be&nbsp;+1.&nbsp;and&nbsp;-1.)</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>CNOT</strong> = &lt;qat.lang.AQASM.gates.PredefGate object&gt;<br>
+<strong>H</strong> = &lt;qat.lang.AQASM.gates.PredefGate object&gt;<br>
+<strong>RY</strong> = AbstractGate(name='RY', parameters=[1], arity=1,...dag_func=&lt;cyfunction &lt;lambda&gt; at 0x7febaf92b1b8&gt;)<br>
+<strong>X</strong> = &lt;qat.lang.AQASM.gates.PredefGate object&gt;<br>
+<strong>Z</strong> = &lt;qat.lang.AQASM.gates.PredefGate object&gt;</td></tr></table>
+</body></html>
