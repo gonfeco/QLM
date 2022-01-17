@@ -228,7 +228,8 @@ def load_U1(nqbits, P_gate, R_gate):
 		rout = QRoutine()
 		reg = rout.new_wires(nqbits+1)
 		rout.apply(R_gate.dag(), reg)
-		rout.apply(P_gate.dag(), reg)
+		#rout.apply(P_gate.dag(), reg)
+		rout.apply(P_gate.dag(), reg[:-1])
 		for wire in reg:
 			rout.apply(X, wire)
 		rout.apply(H, reg[-1])
@@ -237,7 +238,8 @@ def load_U1(nqbits, P_gate, R_gate):
 		rout.apply(H, reg[-1])
 		for wire in reg:
 			rout.apply(X, wire)
-		rout.apply(P_gate, reg)
+		#rout.apply(P_gate, reg)
+		rout.apply(P_gate, reg[:-1])
 		rout.apply(R_gate, reg)
 		return rout
 	U1.set_circuit_generator(U1_generator)
